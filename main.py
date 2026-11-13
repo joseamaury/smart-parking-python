@@ -1,6 +1,7 @@
 
 """Main entry point for the Smart Parking Management System."""
 
+from parking import register_vehicle, get_available_spaces
 
 def display_menu():
     """Display the available parking management options."""
@@ -27,8 +28,19 @@ def main():
             print("\nThank you for using Smart Parking!")
             break
 
-        elif choice in ("1", "2", "3", "4", "5"):
+        
+        elif choice == "1":
+            license_plate = input("Enter license plate: ")
+            result = register_vehicle(license_plate)
+            print(f"\n{result}")
+
+        elif choice == "4":
+            available = get_available_spaces()
+            print(f"\nAvailable parking spaces: {available}")
+
+        elif choice in ("2", "3", "5"):
             print(f"\nOption {choice} is not available yet.")
+
 
         else:
             print("\nInvalid option. Please try again.")
