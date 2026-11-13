@@ -56,7 +56,33 @@ def register_vehicle(license_plate):
     )
 
 
+
 def get_available_spaces():
     """Return the number of available parking spaces."""
 
     return PARKING_CAPACITY - len(parked_vehicles)
+
+
+
+def get_parked_vehicles():
+    """Return a list of vehicles currently parked."""
+
+    if not parked_vehicles:
+        return "There are no vehicles currently parked."
+
+    report = "\n========== PARKED VEHICLES ==========\n"
+
+    for vehicle in parked_vehicles:
+        report += (
+            f"\nTicket ID: {vehicle['ticket_id']}\n"
+            f"License Plate: {vehicle['license_plate']}\n"
+            f"Entry Time (UTC): "
+            f"{vehicle['entry_time']:%d/%m/%Y %H:%M:%S}\n"
+            f"Status: {vehicle['status']}\n"
+            f"Payment: {vehicle['payment_status']}\n"
+            "-------------------------------------\n"
+        )
+
+    report += f"\nTotal parked vehicles: {len(parked_vehicles)}"
+
+    return report
