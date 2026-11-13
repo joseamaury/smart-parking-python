@@ -1,15 +1,22 @@
 
 """Vehicle registration and parking management operations."""
 
+from datetime import datetime, timezone
+
 # Temporary storage for registered vehicles
 parked_vehicles = []
 
 # Maximum number of available parking spaces
 PARKING_CAPACITY = 30
 
+# Sequential ticket counter
+ticket_counter = 0
+
 
 def register_vehicle(license_plate):
-    """Register a vehicle entering the parking facility."""
+    """Register a vehicle and generate its parking ticket."""
+
+    global ticket_counter
 
     license_plate = license_plate.strip().upper()
 
@@ -23,14 +30,30 @@ def register_vehicle(license_plate):
         if vehicle["license_plate"] == license_plate:
             return "Error: Vehicle is already registered."
 
+    ticket_counter += 1
+
+    ticket_id = f"TKT-{ticket_counter:04d}"
+    entry_time = datetime.now(timezone.utc)
+
     vehicle = {
+        "ticket_id": ticket_id,
         "license_plate": license_plate,
-        "status": "PARKED"
+        "entry_time": entry_time,
+        "status": "PARKED",
+        "payment_status": "UNPAID"
     }
 
     parked_vehicles.append(vehicle)
 
-    return f"Vehicle {license_plate} registered successfully!"
+    return (
+        "\n========== PARKING TICKET ==========\n"
+        f"Ticket ID: {ticket_id}\n"
+        f"License Plate: {license_plate}\n"
+        f"Entry Time (UTC): {entry_time:%d/%m/%Y %H:%M:%S}\n"
+        f"Status: {vehicle['status']}\n"
+        f"Payment: {vehicle['payment_status']}\n"
+        "===================================="
+    )
 
 
 def get_available_spaces():
