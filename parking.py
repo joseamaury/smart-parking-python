@@ -90,8 +90,9 @@ def get_parked_vehicles():
 
 
 
+
 def get_parking_fee(ticket_id):
-    """Calculate the current parking fee for a ticket."""
+    """Calculate the parking fee and display the payment status."""
 
     ticket_id = ticket_id.strip().upper()
 
@@ -105,13 +106,17 @@ def get_parking_fee(ticket_id):
             if isinstance(result, str):
                 return result
 
+            payment_status = vehicle.get("payment_status", "UNPAID")
+
             return (
                 "\n========== PARKING FEE ==========\n"
                 f"Ticket ID: {ticket_id}\n"
                 f"License Plate: {vehicle['license_plate']}\n"
                 f"Charged Hours: {result['charged_hours']}\n"
                 f"Total Fee: €{result['total_fee']:.2f}\n"
+                f"Payment Status: {payment_status}\n"
                 "================================="
             )
 
     return "Error: Ticket not found."
+
