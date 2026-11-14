@@ -6,6 +6,7 @@ from parking import (
     get_available_spaces,
     get_parked_vehicles,
     get_parking_fee,
+    validate_vehicle_exit,
 )
 from payments import process_payment
 
@@ -52,6 +53,12 @@ def main():
             ticket_id = input("Enter ticket ID for payment: ")
             result = process_payment(ticket_id)
             print(f"\n{result}")
+
+        elif choice == "4":
+            ticket_id = input("Enter ticket ID for exit: ")
+            result = validate_vehicle_exit(ticket_id)
+            print(f"\n{result}")
+
 
         elif choice == "5":
             available = get_available_spaces()

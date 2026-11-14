@@ -120,3 +120,33 @@ def get_parking_fee(ticket_id):
 
     return "Error: Ticket not found."
 
+
+def validate_vehicle_exit(ticket_id):
+    """Validate payment and release the parking space."""
+
+    ticket_id = ticket_id.strip().upper()
+
+    for vehicle in parked_vehicles:
+        if vehicle["ticket_id"] == ticket_id:
+
+            if vehicle["payment_status"] != "PAID":
+                return "Error: Payment required before exit."
+
+            exit_time = datetime.now(timezone.utc)
+
+            vehicle["status"] = "EXITED"
+            vehicle["exit_time"] = exit_time
+
+            parked_vehicles.remove(vehicle)
+
+            return (
+                "\n========== EXIT RECEIPT ==========\n"
+                f"Ticket ID: {ticket_id}\n"
+                f"License Plate: {vehicle['license_plate']}\n"
+                f"Exit Time (UTC): {exit_time:%d/%m/%Y %H:%M:%S}\n"
+                f"Status: {vehicle['status']}\n"
+                "Parking space released successfully.\n"
+                "=================================="
+            )
+
+    return "Error: Ticket not found."
