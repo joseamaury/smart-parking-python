@@ -96,6 +96,6 @@ Python 3 is required. No external packages are currently needed.
 
 **José Amaury Machado Junior**
 
-GitHub: [joseamaury](https://github.com/joseamaury) LinkedIn: [joseamaury(https://www.linkedin.com/in/joseamaury/)]
+GitHub: [joseamaury](https://github.com/joseamaury) LinkedIn: [joseamaury](https://www.linkedin.com/in/joseamaury/)
 
 This project is part of my professional development and transition into the technology industry.
