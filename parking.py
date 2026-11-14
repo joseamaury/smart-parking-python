@@ -2,6 +2,7 @@
 """Vehicle registration and parking management operations."""
 
 from datetime import datetime, timezone
+from pricing import calculate_parking_fee
 
 # Temporary storage for registered vehicles
 parked_vehicles = []
@@ -86,3 +87,31 @@ def get_parked_vehicles():
     report += f"\nTotal parked vehicles: {len(parked_vehicles)}"
 
     return report
+
+
+
+def get_parking_fee(ticket_id):
+    """Calculate the current parking fee for a ticket."""
+
+    ticket_id = ticket_id.strip().upper()
+
+    for vehicle in parked_vehicles:
+        if vehicle["ticket_id"] == ticket_id:
+
+            result = calculate_parking_fee(
+                vehicle["entry_time"]
+            )
+
+            if isinstance(result, str):
+                return result
+
+            return (
+                "\n========== PARKING FEE ==========\n"
+                f"Ticket ID: {ticket_id}\n"
+                f"License Plate: {vehicle['license_plate']}\n"
+                f"Charged Hours: {result['charged_hours']}\n"
+                f"Total Fee: €{result['total_fee']:.2f}\n"
+                "================================="
+            )
+
+    return "Error: Ticket not found."

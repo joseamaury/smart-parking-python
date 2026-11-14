@@ -1,7 +1,12 @@
 
 """Main entry point for the Smart Parking Management System."""
 
-from parking import register_vehicle, get_available_spaces, get_parked_vehicles
+from parking import (
+    register_vehicle,
+    get_available_spaces,
+    get_parked_vehicles,
+    get_parking_fee,
+)
 
 def display_menu():
     """Display the available parking management options."""
@@ -9,7 +14,7 @@ def display_menu():
     print("      SMART PARKING MANAGEMENT SYSTEM")
     print("=" * 45)
     print("1. Register vehicle entry")
-    print("2. Process parking payment")
+    print("2. Check parking fee")
     print("3. Validate vehicle exit")
     print("4. Check parking availability")
     print("5. View daily report")
@@ -35,6 +40,11 @@ def main():
             result = register_vehicle(license_plate)
             print(f"\n{result}")
 
+        elif choice == "2":
+            ticket_id = input("Enter ticket ID: ")
+            result = get_parking_fee(ticket_id)
+            print(f"\n{result}")    
+
         elif choice == "4":
             available = get_available_spaces()
             print(f"\nAvailable parking spaces: {available}")
@@ -43,7 +53,7 @@ def main():
             report = get_parked_vehicles()
             print(f"\n{report}")    
 
-        elif choice in ("2", "3", "5"):
+        elif choice in ("3", "5"):
             print(f"\nOption {choice} is not available yet.")
 
 
